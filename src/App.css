@@ -1,38 +1,349 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  font-family: "Bebas Neue", cursive;
+}
+
 .App {
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  background-color: azure;
 }
 
-.App-logo {
-  height: 40vmin;
+.three-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.data-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   pointer-events: none;
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.content {
+  position: relative;
+  width: 100%;
+  max-width: 1110px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 600ms ease 1400ms;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.content.loaded {
+  opacity: 1;
+}
+
+.config-container {
+  width: 70%;
+  padding: 20px 40px;
+  height: 240px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  pointer-events: all;
+}
+
+.picker-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: all;
+  opacity: 1;
+  transition: opacity 400ms ease;
+  z-index: 900;
+}
+
+.picker-container.hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.chrome-picker {
+  pointer-events: all;
+}
+
+.picker-buttons {
+  position: absolute;
+  bottom: -40px;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.picker-buttons button {
+  margin: 0 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+  background-color: rgba(252, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(4px);
+  font-family: "Bebas Neue", cursive;
+  font-size: 16px;
+  border-color: #252525;
+  transition: background-color 400ms ease, color 400ms ease;
+}
+
+.picker-buttons button:hover {
+  background-color: #252525;
+  color: #fff;
+}
+
+.photoshop-picker,
+.sketch-picker {
+  pointer-events: all;
+  z-index: 900;
+  opacity: 1;
+  transition: opacity 400ms ease-out;
+}
+
+.photoshop-picker.hide,
+.sketch-picker.hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.colorContainer {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  margin: 6px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45));
+  opacity: 0.7;
+  transform: scale(1);
+  transition: opacity 400ms ease, transform 250ms ease-out;
+}
+
+.colorContainer:hover {
+  opacity: 1;
+  transform: scale(1.025);
+}
+.colorContainer.active {
+  opacity: 1;
+  transform: scale(1.025);
+}
+
+.colorContainer.active .colorDiv {
+  border-color: #2c3e50;
+}
+
+.addColorContainer {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  margin: 6px;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45));
+  transform: scale(1);
+  transition: transform 250ms ease-out;
+}
+
+.addColorContainer:hover {
+  transform: scale(1.025);
+}
+
+.iconContainer {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #2c3e50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.colorDiv {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: solid 4px #ffffff;
+  transition: border-color 400ms ease;
+}
+
+.icon-back {
+  transform: translateX(2px);
+}
+.sliders-parent {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.sliders-container {
+  min-width: 320px;
+  min-height: 40px;
+  padding: 30px 20px;
+  background-color: rgba(252, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
+  -webkit-filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.35));
+  pointer-events: all;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+
+  border-radius: 20px;
+}
+
+.sliders-container.hide {
+  pointer-events: none;
+}
+
+.picker-grabable {
+  background-color: #fff;
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: all;
+  z-index: 950;
+  color: #252525;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.45));
+  transition: background-color 350ms ease, color 350ms ease;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 40px;
+  transform: translateY(-40px);
+  position: absolute;
 }
 
-.App-link {
-  color: #61dafb;
+.picker-grabable:hover {
+  color: #fff;
+  background-color: #252525;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.eye-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  pointer-events: all;
+  transform: translate(50%, -50%);
+  color: #252525;
+  opacity: 1;
+  transition: opacity 350ms ease-out;
+}
+
+.eye-icon.hide {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sliders-show {
+  opacity: 1;
+  transition: opacity 350ms ease-out;
+  pointer-events: all;
+}
+
+.sliders-show.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #2c3e50;
+  width: 100%;
+  height: 100vh;
+  transform: translate(0, 0) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999 !important;
+  color: #fff;
+  pointer-events: all;
+}
+
+.loading-container h2 {
+  font-size: 60px;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.65));
+}
+
+.loading-container.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    width: 90%;
   }
-  to {
-    transform: rotate(360deg);
+
+  .config-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 700px) {
+  .content {
+    width: 95%;
+  }
+
+  .config-container {
+    width: 100%;
+  }
+
+  .addColorContainer {
+    width: 60px;
+    height: 60px;
+  }
+
+  .sliders-parent {
+    right: 15px;
+  }
+
+  .sliders-container {
+    padding: 10px 10px;
   }
 }

@@ -1,0 +1,36 @@
+.color-light-container {
+  width: 70%;
+  padding: 20px 40px;
+  height: 240px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  pointer-events: all;
+  overflow-y: scroll;
+  position: relative;
+  mask-image: linear-gradient(
+    0deg,
+    transparent,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 1),
+    transparent
+  );
+}
+
+@media (max-width: 1024px) {
+  .color-light-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 700px) {
+  .color-light-container {
+    padding: 20px 20px;
+  }
+}
